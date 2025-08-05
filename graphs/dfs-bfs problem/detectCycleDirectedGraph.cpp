@@ -1,4 +1,6 @@
 #include <vector>
+#include <queue>
+#include <iostream>
 using namespace std;
 // Detect Cycle in a Directed Graph using DFS
 // Time Complexity: O(V + E)
@@ -31,5 +33,49 @@ public:
         }
 
         return false;
+    }
+};
+
+// Detect Cycle in a Directed Graph using Kahn's Algorithm (BFS)
+// Time Complexity: O(V + E)   
+// Space Complexity: O(V)
+
+class Solution {
+public:
+    bool isCyclic(int V, const std::vector<std::vector<int>>& adj) {
+        std::vector<int> inDegree(V, 0);
+
+        // Calculate in-degree of each vertex
+        for (int i = 0; i < V; i++) {
+            for (int n : adj[i]) {
+                inDegree[n]++;
+            }
+        }
+
+        queue<int> q;
+        // Enqueue vertices with in-degree 0
+        for (int i = 0; i < V; i++) {
+            if (inDegree[i] == 0) {
+                q.push(i);
+            }
+        }
+
+        int countProcessed = 0;
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+            countProcessed++;
+
+            // Reduce the in-degree of neighbors
+            for (int n : adj[node]) {
+                inDegree[n]--;
+                if (inDegree[n] == 0) {
+                    q.push(n);
+                }
+            }
+        }
+
+        // If countProcessed != V, there is a cycle
+        return countProcessed != V;
     }
 };
