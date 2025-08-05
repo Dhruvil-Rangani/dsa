@@ -1,3 +1,12 @@
+#include <vector>
+#include <set>
+using namespace std;
+#include <queue>
+// LeetCode 1020. Number of Enclaves
+// https://leetcode.com/problems/number-of-enclaves/
+// This solution uses BFS to explore the grid and count the number of enclaves.
+// The time complexity is O(n * m) where n is the number of rows and m is the number of columns in the grid.
+
 class Solution {
 private:
     vector<int> delRow = {-1, 0, 1, 0};

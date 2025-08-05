@@ -1,3 +1,11 @@
+#include <vector>
+#include <set>
+using namespace std;
+// LeetCode 130. Surrounded Regions
+// https://leetcode.com/problems/surrounded-regions/
+// This solution uses DFS to mark all 'O's connected to the border as safe.
+// The time complexity is O(n * m) where n is the number of rows and m is the number of columns in the grid.
+
 class Solution {
 private:
     vector<int> delRow = {-1, 0, 1, 0};

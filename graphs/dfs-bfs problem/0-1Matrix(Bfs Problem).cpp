@@ -1,3 +1,11 @@
+#include <vector>
+#include <queue>
+using namespace std;
+// LeetCode 542. 01 Matrix
+// https://leetcode.com/problems/01-matrix/
+// This solution uses BFS to find the distance of each cell from the nearest 0.
+// The time complexity is O(n * m) where n is the number of rows and m is the number of columns in the matrix.
+
 class Solution {
     private:
     vector<int> delRow = {-1, 0, 1, 0};

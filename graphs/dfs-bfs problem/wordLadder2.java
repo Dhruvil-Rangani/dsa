@@ -55,7 +55,7 @@ class Solution {
 // This is more efficient for larger inputs. Since it avoids recomputing the steps for each word.
 // LeetCode 126. Word Ladder II
 // https://leetcode.com/problems/word-ladder-ii/
-class Solution {
+class Solution2 {
     private void dfs(String word, String beginWord, List<String> seq, Map<String, Integer> map, List<List<String>> ans) {
         if(word.equals(beginWord)) {
             Collections.reverse(seq);
