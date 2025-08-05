@@ -51,4 +51,74 @@ class Solution {
     }
 }
 
+// Below is the DFS solution for the same problem. Optimized using a map to store the steps. 
+// This is more efficient for larger inputs. Since it avoids recomputing the steps for each word.
+// LeetCode 126. Word Ladder II
+// https://leetcode.com/problems/word-ladder-ii/
+class Solution {
+    private void dfs(String word, String beginWord, List<String> seq, Map<String, Integer> map, List<List<String>> ans) {
+        if(word.equals(beginWord)) {
+            Collections.reverse(seq);
+            ans.add(new ArrayList<>(seq));
+            Collections.reverse(seq);
+            return;
+        }
+
+        int val = map.get(word);
+        for(int i = 0; i < word.length(); i++) {
+            char[] wordArray = word.toCharArray();
+            for(char c = 'a'; c <= 'z'; c++) {
+                wordArray[i] = c;
+                String newWord = new String(wordArray);
+                if(map.containsKey(newWord) && map.get(newWord) + 1 == val) {
+                    seq.add(newWord);
+                    dfs(newWord, beginWord, seq, map, ans);
+                    seq.remove(seq.size() - 1);
+                }
+            }
+        }
+    }
+       public List<List<String>> findSequences(String beginWord, String endWord, List<String> wordList) {
+       int len = beginWord.length();
+
+       Set<String> set = new HashSet<>(wordList);
+       Map<String, Integer> map = new HashMap<>();
+       Queue<String> q = new LinkedList<>();
+
+       q.add(beginWord);
+       set.remove(beginWord);
+
+       int steps = 1;
+       map.put(beginWord, steps);
+
+       while(!q.isEmpty()) {
+        String word = q.poll();
+        steps = map.get(word);
+
+        for(int i = 0; i < len; i++) {
+            char[] wordArray = word.toCharArray();
+
+            for(char c = 'a'; c <= 'z'; c++) {
+                wordArray[i] = c;
+                String newWord = new String(wordArray);
+
+                if(set.contains(newWord)) {
+                    map.put(newWord, steps + 1);
+                    q.add(newWord);
+                    set.remove(newWord);
+                }
+            }
+        }
+       }
+
+       if(!map.containsKey(endWord)) return new ArrayList<>();
+       List<List<String>> ans = new ArrayList<>();
+       List<String> seq = new ArrayList<>();
+       seq.add(endWord);
+       dfs(endWord, beginWord, seq, map, ans);
+       return ans;
+    }
+}
+
+
 
