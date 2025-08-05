@@ -29,3 +29,36 @@ class Solution {
         return ans;
     }
 }
+
+// Topological Sort using BFS (Kahn's Algorithm)
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
+
+class Solution2 {
+    public int[] topoSort(int V, List<List<Integer>> adj) {
+        int[] indegree = new int[V];
+        for(int i = 0; i < V; i++) {
+            for(int n : adj.get(i)) indegree[n]++;
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for(int i = 0; i < V; i++) {
+            if(indegree[i] == 0) q.add(i);
+        }
+
+        int[] ans = new int[V];
+        int index = 0;
+
+        while(!q.isEmpty()) {
+            int node = q.poll();
+            ans[index++] = node;
+
+            for(int n : adj.get(node)) {
+                indegree[n]--;
+                if(indegree[n] == 0) q.add(n);
+            }
+        }
+
+        return ans;
+    }
+}
