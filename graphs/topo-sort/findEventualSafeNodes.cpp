@@ -10,7 +10,7 @@ using namespace std;
 
 class Solution {
     private:
-        vector<int> topoSort(int V, vector<int> adjRev[], vector<int>& inDegree) {
+        vector<int> topoSort(int V, vector<vector<int>> adjRev, vector<int>& inDegree) {
             vector<int> ans;
             queue<int> q;
 
@@ -33,7 +33,7 @@ class Solution {
         }
    public:
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
-        vector<int> adjRev[V];
+        vector<vector<int>> adjRev(V);
         vector<int> inDegree(V, 0);
         for(int i = 0; i < V; i++) {
             for(auto it: adj[i]) {
