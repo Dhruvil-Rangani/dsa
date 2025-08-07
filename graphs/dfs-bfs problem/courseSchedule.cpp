@@ -9,7 +9,7 @@ using namespace std;
 
 class Solution{
 private:
-    vector<int> topoSort(int V, vector<int> adj[]) {
+    vector<int> topoSort(int V, vector<vector<int>>& adj) {
         vector<int> inDegree(V, 0);
         for(int i = 0; i < V; i++) {
             for(auto it: adj[i]) inDegree[it]++;
@@ -38,7 +38,7 @@ private:
     }
 public:
     bool canFinish(int N, vector<vector<int>> arr) {
-        vector<int> adj[N];
+        vector<vector<int>> adj(N);
 
         for(auto it: arr) {
             int u = it[0];

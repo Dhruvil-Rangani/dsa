@@ -7,7 +7,7 @@ using namespace std;
 // Space Complexity: O(V + E)
 class Solution {
   private:
-    vector<int> topo(int N, vector<int> adj[]) {
+    vector<int> topo(int N, vector<vector<int>> &adj) {
       vector<int> inDegree(N, 0);
       for(int i = 0; i < N; i++) {
         for(auto it: adj[i]) inDegree[it]++;
@@ -35,7 +35,7 @@ class Solution {
     }
    public:
     vector<int> findOrder(int N, vector<vector<int>> arr) {
-        vector<int> adj[N];
+        vector<vector<int>> adj(N);
         for (auto it : arr) {
             int u = it[0];
             int v = it[1];
