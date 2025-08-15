@@ -53,6 +53,17 @@ class DisjointSet {
     }
 
     public void unionBySize(int u, int v) {
-        
+        int ulPU = findUPar(u);
+        int ulPV = findUPar(v);
+
+        if(ulPU == ulPV) return;
+
+        if(size[ulPU] < size[ulPV]){
+            parent[ulPU] = ulPV;
+            size[ulPV] += size[ulPU];
+        } else {
+            parent[ulPV] = ulPU;
+            size[ulPU] += size[ulPV];
+        }
     }
 }
