@@ -114,6 +114,33 @@ func frogJump3(heights []int, k int) int {
 // space optimized Approach
 // Time Complexity: O(n * k)
 // Space Complexity: O(1)
+func abs2(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+func frogJump4(heights []int, k int) int {
+	ind := len(heights)
+	dp := make([]int, k)
+
+	for i := 1; i < ind; i++ {
+		minSteps := int(1e9)
+
+		for j := 1; j <= k; j++ {
+			if i-j >= 0 {
+                prevInd := (i - j) % k;
+				jump := dp[prevInd] + abs2(heights[i]-heights[i-j])
+                if jump < minSteps {
+				minSteps = jump
+			}
+			}
+		}
+        dp[i % k] = minSteps
+	}
+	return dp[(ind-1) % k]
+}
 
 
 
