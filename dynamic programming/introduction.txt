@@ -1,0 +1,78 @@
+Introduction To Dynamic Programming
+Dynamic programming (DP) is a method used in computer science and mathematics to solve complex problems by breaking them down into simpler sub-problems. It is particularly useful for optimization problems where the problem can be divided into overlapping sub-problems, which can be solved independently and combined to form the solution to the overall problem.
+
+Approaches
+Memoization: Known as “top-down” dynamic programming, it usually solves the problem from the main problem to the base cases.
+Tabulation: Known as “bottom-up” dynamic programming, it solves the problem from the base cases to the main problem.
+Example: Fibonacci Numbers
+The Fibonacci series is as follows:
+
+0, 1, 1, 2, 3, 5, 8, 13, 21, ...
+
+Find the nth Fibonacci number, where n is based on a 0-based index. Each ith number is the sum of (i-1)th and (i-2)th numbers, with the first two numbers given as 0 and 1.
+
+
+Solution: Memoization
+Memoization also known as "top-down" dynamic programming, involves solving the problem by recursively breaking it down from the main problem to the base cases and storing the results of these sub-problems in a table (usually a dictionary or an array). When the same sub-problem is encountered again, the stored result is used instead of recomputing it, thereby saving computation time.
+
+
+Steps to Memoize a Recursive Solution
+Create a dp[n+1] array initialized to -1.
+Check if the answer is already calculated using the dp array (dp[n] != -1). If yes, return the value.
+If not, compute the value and store it in the dp array before returning.
+
+
+Image 1
+Image 2
+Image 3
+Image 4
+
+1/4
+
+
+
+Cpp
+Java
+Python
+
+89101112131415161718192021222324252627
+Time Complexity: O(N) Overlapping subproblems return answers in constant time O(1). Therefore, only 'n' new subproblems are solved, resulting in O(N) complexity.
+
+Space Complexity: O(N) Using recursion stack space and an array, the total space complexity is O(N) + O(N) ≈ O(N).
+
+Solution: Tabulation
+Tabulation, also known as "bottom-up" dynamic programming, involves solving the problem by iteratively solving all possible sub-problems, starting from the base cases and building up to the solution of the main problem. The results of sub-problems are stored in a table, and each entry in the table is filled based on previously computed entries.
+
+Steps to Convert Recursive Solution to Tabulation
+Declare a dp[] array of size n+1.
+Initialize base condition values, i.e., i=0 and i=1 of the dp array as 0 and 1 respectively.
+Use an iterative loop to traverse the array (from index 2 to n) and set each value as dp[i-1] + dp[i-2].
+Cpp
+Java
+Python
+
+1234567891011121314151617
+Time Complexity: O(N): Running a simple iterative loop results in O(N) complexity.
+
+Space Complexity: O(N): Using an external array of size n+1, the space complexity is O(N).
+
+Solution: Space Optimization
+The relation dp[i] = dp[i-1] + dp[i-2] shows that only the last two values in the array are needed. By maintaining only two variables (prev and prev2), space can be optimized. This optimization reduces the space complexity from O(N) to O(1) since it eliminates the need for an entire array to store intermediate results.
+
+In each iteration, compute the current Fibonacci number using the values of prev and prev2. Assign the value of prev to prev2 and the value of the current Fibonacci number to prev. This way, the variables are updated for the next iteration. After the loop completes, the variable prev holds the value of the nth Fibonacci number, which is then returned as the result.
+
+
+Cpp
+Java
+Python
+
+12345678910111213141516171819202122
+Time Complexity O(N) : We are running a simple iterative loop
+
+SpaceComplexity O(1) : We are not using any extra space
+
+Conclusion
+Dynamic programming is a powerful technique for solving complex problems by breaking them down into simpler subproblems. By using approaches like memoization and tabulation, it is possible to optimize both time and space complexities. Understanding the principles behind dynamic programming and practicing with examples like the Fibonacci sequence can help in mastering this method.
+
+Additional Information
+Dynamic programming problems can often be identified by the presence of overlapping subproblems and optimal substructure properties. Overlapping subproblems mean that the same subproblems are solved multiple times, and optimal substructure means that the solution to a problem can be composed of solutions to its subproblems. Common applications of dynamic programming include problems related to sequences, such as the longest common subsequence, and optimization problems, such as the knapsack problem.
