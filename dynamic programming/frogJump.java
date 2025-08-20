@@ -1,5 +1,11 @@
 import java.util.*;
-// LeetCode 1003. Frog Jump
+// This is a solution for the Frog Jump problem using dynamic programming.
+// but it is not the correct solution for the problem as described in the context.
+// The problem is to find the minimum cost for a frog to jump from the first stone to the last stone,
+// where the cost of jumping from stone i to stone j is given by the absolute difference in their heights.
+// The frog can jump to the next stone or skip one stone.
+// The code below implements three different approaches: memoization, tabulation, and space optimization.
+// The frogJump function calculates the minimum cost for the frog to reach the last stone.
 // Dynamic Programming Approach
 // Time Complexity: O(n)
 // space Complexity: O(n) for recursion stack space + O(n) for memoization
