@@ -1,4 +1,3 @@
-import java.util.*;
 // House Robber II - Not Adjacent in Circular Manner
 // This is a solution for the House Robber II problem using dynamic programming.
 // The problem is to find the maximum amount of money that can be robbed from a series of houses arranged in a circle,

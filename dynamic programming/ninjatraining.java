@@ -73,3 +73,40 @@ class Solution2 {
     }
 }
 
+// Space Optimized Approach
+// Time Complexity: O(n * 4) where n is the number of days
+// Space Complexity: O(4) for the dp array
+class Solution3 {
+  public int ninjaTraining(int[][] matrix) {
+    int n = matrix.length;
+    int[] dp = new int[4];
+    Arrays.fill(dp, -1);
+
+    for(int last = 0; last < 4; last++) {
+        dp[last] = 0;
+        for(int task = 0; task < 3; task++) {
+            if(last != task) {
+                dp[last] = Math.max(dp[last], matrix[0][task]);
+            }
+        }
+    }
+
+    for(int day = 1; day < n; day++) {
+        int[] temp = new int[4];
+        for(int last = 0; last < 4; last++) {
+            temp[last] = 0;
+            for(int task = 0; task < 3; task++) {
+                if(last != task) {
+                    int points = matrix[day][task] + dp[task];
+                    temp[last] = Math.max(temp[last], points);
+                }
+            }
+        }
+        dp = temp;
+    }
+
+    return dp[3];
+  }
+}
+
+
