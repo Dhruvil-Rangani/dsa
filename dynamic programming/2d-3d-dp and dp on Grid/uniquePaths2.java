@@ -3,7 +3,7 @@ import java.util.Arrays;
 // This problem requires us to find the number of unique paths from the top-left to the bottom-right
 // of a grid with obstacles. We can use dynamic programming to solve this problem.
 // Time Complexity: O(M * N), where M is the number of rows and N is the number of columns in the grid.
-// Space Complexity: O(M * N) for the DP table.
+// Space Complexity: O(M * N) for the DP table and O(M + N) for the memoization stack space.
 // Note: The grid is represented as a 2D array where 1 represents an obstacle and 0 represents a free cell. 
 
 // This is memoization approach to solve the problem.
@@ -29,3 +29,45 @@ class Solution {
 }
 
 // This is tabulation approach to solve the problem.
+// It uses a bottom-up dynamic programming approach to fill the DP table iteratively.
+// The DP table is filled based on the number of unique paths to each cell, considering obstacles.
+// The first cell is initialized to 1 if it is not an obstacle, and the rest are filled based on the values from the top and left cells.
+// The final result is found in the bottom-right cell of the DP table.
+// Time Complexity: O(M * N), where M is the number of rows and N is the number of columns in the grid.
+// Space Complexity: O(M * N) for the DP table.
+// By implementing the tabulation approach, we avoid the overhead of recursion and memoization, making it more efficient for larger grids.
+// This approach is iterative and fills the DP table in a bottom-up manner.
+
+class Solution2 {
+    public int uniquePathsWithObstacles(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        // edge case if 1st cell is 1
+        if(matrix[0][0] == 1) return 0;
+
+        int[][] dp = new int[m][n];
+        
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(matrix[i][j] == 1) {
+                    dp[i][j] = 0;
+                } else {
+                    if(i == 0 && j == 0) {
+                        dp[i][j] = 1;
+                        continue;
+                    }
+                    int up = i > 0 ? dp[i - 1][j] : 0;
+                    int left = j > 0 ? dp[i][j - 1] : 0;
+
+                    dp[i][j] = up + left;
+                }
+            }
+        }
+
+        return dp[m - 1][n - 1];
+    }
+}
+
+
+// This is space optimized approach to solve the problem.
+// It reduces the space complexity by using a single array to store the current row's results.
