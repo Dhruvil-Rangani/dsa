@@ -81,6 +81,10 @@ class Solution2 {
 // By implementing the space-optimized approach, we achieve better space efficiency without sacrificing performance.
 // In large scale applications, for example in robotics or game development, where memory usage is critical, this approach is highly beneficial.
 // It is also useful in scenarios where the grid size is dynamic and can grow significantly, making traditional DP approaches less feasible due to memory constraints.
+// Example of large scale applications and companies that might benefit from this approach include robotics, game development, and real-time simulations where memory efficiency is crucial.
+// companies like Google, Amazon, and Microsoft often deal with large datasets and require efficient algorithms to handle grid-based problems in their applications.
+// even growing startups in the filed of AI and machine learning, where large datasets are common, can benefit from such space-optimized algorithms.
+// For exmaple: OpenAI, DeepMind, and other AI research organizations where sudden spikes in data processing can occur, making space efficiency a priority.
 class Solution3 {
     public int uniquePathsWithObstacles(int[][] matrix) {
         int m = matrix.length;
