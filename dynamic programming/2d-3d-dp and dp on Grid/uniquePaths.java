@@ -65,3 +65,32 @@ class Solution2 {
         return dp[m - 1][n - 1];
     }
 }
+
+// Space Optimized Approach
+// Time Complexity: O(m * n) where m is the number of rows and n is the number of columns
+// Space Complexity: O(n) for the previous row array
+// The space optimization is achieved by using a single array to store the number of unique paths to reach each cell in the current row,
+// and updating it as we iterate through the rows of the grid.
+
+class Solution3 {
+    public int uniquePaths(int m, int n) {
+        int[] prev = new int[n];
+
+        for(int i = 0; i < m; i++) {
+            int[] temp = new int[n];
+            for(int j = 0; j < n; j++) {
+                if(i == 0 && j == 0) temp[0] = 1;
+                else {
+                    int up = 0;
+                    int left = 0;
+
+                    if(i > 0) up = prev[j];
+                    if(j > 0) left = temp[j - 1];
+                    temp[j] = up + left;
+                }
+            }
+            prev = temp;
+        }
+        return prev[n - 1];
+    }
+}
