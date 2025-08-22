@@ -9,6 +9,17 @@ import java.util.*;
 // Note: The last parameter in the recursion function is used to track the last activity performed.
 // The ninja can choose from three activities each day, and the last activity is represented by an integer (0, 1, or 2).
 // The ninja can also skip a day, represented by the integer 3.
+// if I do not do memoization then the time complexity will be O(3^n) where n is the number of days
+// This is because for each day, the ninja has three choices (activities) and can also skip a day,
+// leading to an exponential number of combinations.
+// The memoization approach reduces this to O(n * 4) by storing results of sub
+// problems in a table, avoiding redundant calculations.
+// and space complexity without memoization is O(n) for recursion stack space
+// The memoization table is of size n x 4, where n is the number of days and 4 represents the last activity (0, 1, 2, or 3).
+// The last activity is represented by an integer (0, 1, or 2)
+// and the ninja can also skip a day, represented by the integer 3.
+// The ninja can choose from three activities each day, and the last activity is represented by an integer (0, 1, or 2).
+// The ninja can also skip a day, represented by the integer 3.
 class Solution {
     private int recursion(int day, int last, int[][] matrix, int[][] dp) {
         // memoization
