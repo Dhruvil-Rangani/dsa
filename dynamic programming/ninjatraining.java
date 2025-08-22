@@ -42,3 +42,34 @@ class Solution {
         return recursion(n - 1, 3, matrix, dp);
     }
 }
+
+// tabulation approach
+// Time Complexity: O(n * 4) where n is the number of days
+// Space Complexity: O(n * 4) for the dp table
+class Solution2 {
+    public int ninjaTraining(int[][] matrix) {
+        int n = matrix.length;
+        int[][] dp = new int[n][4];
+        for(int[] row : dp) Arrays.fill(row, -1);
+
+        dp[0][0] = Math.max(matrix[0][1], matrix[0][2]);
+        dp[0][1] = Math.max(matrix[0][0], matrix[0][2]);
+        dp[0][2] = Math.max(matrix[0][0], matrix[0][1]);
+        dp[0][3] = Math.max(matrix[0][0], Math.max(matrix[0][1], matrix[0][2]));
+        
+        for(int i = 1; i < n; i++) {
+            for(int last = 0; last < 4; last++) {
+                dp[i][last] = 0;
+                for(int task = 0; task <= 2; task++) {
+                    if(task != last) {
+                        int points = matrix[i][task] + dp[i - 1][task];
+                        dp[i][last] = Math.max(dp[i][last], points);
+                    }
+                }
+            }
+        }
+
+        return dp[n - 1][3];
+    }
+}
+
