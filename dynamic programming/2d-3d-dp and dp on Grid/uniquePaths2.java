@@ -71,3 +71,44 @@ class Solution2 {
 
 // This is space optimized approach to solve the problem.
 // It reduces the space complexity by using a single array to store the current row's results.
+// The previous row's results are stored in the same array, which is updated iteratively.
+// Time Complexity: O(M * N), where M is the number of rows and N is the number of columns in the grid.
+// Space Complexity: O(N) for the DP array.
+// This approach is particularly useful for large grids where space efficiency is crucial.
+// It maintains the same time complexity while significantly reducing the space used.
+// The final result is found in the last element of the DP array after processing all rows.
+// This approach is iterative and fills the DP array in a bottom-up manner.
+// By implementing the space-optimized approach, we achieve better space efficiency without sacrificing performance.
+// In large scale applications, for example in robotics or game development, where memory usage is critical, this approach is highly beneficial.
+// It is also useful in scenarios where the grid size is dynamic and can grow significantly, making traditional DP approaches less feasible due to memory constraints.
+class Solution3 {
+    public int uniquePathsWithObstacles(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        // edge case if 1st cell is 1
+        if(matrix[0][0] == 1) return 0;
+
+        int[] dp = new int[n];
+        
+        for(int i = 0; i < m; i++) {
+            int[] temp = new int[n];
+            for(int j = 0; j < n; j++) {
+                if(matrix[i][j] == 1) {
+                    temp[j] = 0;
+                } else {
+                    if(i == 0 && j == 0) {
+                        temp[j] = 1;
+                        continue;
+                    }
+                    int up = i > 0 ? dp[j] : 0;
+                    int left = j > 0 ? temp[j - 1] : 0;
+
+                    temp[j] = up + left;
+                }
+            }
+            dp = temp;
+        }
+
+        return dp[n - 1];
+    }
+}
