@@ -1,0 +1,44 @@
+import java.util.*;
+// Ninja Training - Dynamic Programming
+// This is a solution for the Ninja Training problem using dynamic programming.
+// The problem is to maximize the points a ninja can earn by training on different activities each day,
+// ensuring that the same activity is not performed on consecutive days.
+// The code below implements a recursive approach with memoization to solve the problem.
+// Time Complexity: O(n * 4) where n is the number of days
+// Space Complexity: O(n * 4) for the memoization table
+// Note: The last parameter in the recursion function is used to track the last activity performed.
+// The ninja can choose from three activities each day, and the last activity is represented by an integer (0, 1, or 2).
+// The ninja can also skip a day, represented by the integer 3.
+class Solution {
+    private int recursion(int day, int last, int[][] matrix, int[][] dp) {
+        // memoization
+        if(dp[day][last] != -1) return dp[day][last];
+
+        // base case
+        if(day == 0) {
+            int max = 0;
+            for(int i = 0; i < 3; i++) {
+                if(i != last) max = Math.max(max, matrix[0][i]);
+            }
+            return dp[day][last] = max;
+        }
+
+        int max = 0;
+        for(int i = 0; i < 3; i++) {
+            if(i != last) {
+                int points = matrix[day][i] + recursion(day - 1, i, matrix, dp);
+                max = Math.max(points, max);
+            }
+        }
+
+        return dp[day][last] = max;
+    }
+
+    public int ninjaTraining(int[][] matrix) {
+        int n = matrix.length;
+        int[][] dp = new int[n][4];
+        for(int[] row : dp) Arrays.fill(row, -1);
+
+        return recursion(n - 1, 3, matrix, dp);
+    }
+}
