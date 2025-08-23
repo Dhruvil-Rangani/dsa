@@ -57,3 +57,58 @@ class Solution2 {
         return func(n - 1, m - 1, grid, dp);
     }
 }
+
+// This is tabulation approach to solve the problem.
+// It uses an iterative approach to fill a DP table based on previously computed values.
+// The time complexity is O(M * N) where M is the number of rows and N is the number of columns in the grid.
+// The space complexity is O(M * N) for the DP table.
+// The code below implements this approach.
+
+class Solution3 {
+    public int minPathSum(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int[][] dp = new int[n][m];
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                if(i == 0 && j == 0) dp[0][0] = grid[0][0];
+                else {
+                    int up = i > 0 ? grid[i][j] + dp[i - 1][j] : Integer.MAX_VALUE;
+                    int left = j > 0 ? grid[i][j] + dp[i][j - 1] : Integer.MAX_VALUE;
+                    dp[i][j] = Math.min(up, left);
+                }
+            }
+        }
+
+        return dp[n - 1][m - 1];
+    }
+}
+
+// This is space optimization approach to solve the problem.
+// It reduces the space complexity by using a single array to store the minimum path sums for the current row.
+// The time complexity remains O(M * N) where N is the number of rows and M is the number of columns in the grid.
+// The space complexity is reduced to O(M) where M is the number of columns in the grid.
+// The code below implements this approach.
+
+class Solution4 {
+    public int minPathSum(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int[] dp = new int[m];
+        for(int i = 0; i < n; i++) {
+            int[] temp = new int[m];
+            for(int j = 0; j < m; j++) {
+                if(i == 0 && j == 0) temp[0] = grid[0][0];
+                else {
+                    int up = i > 0 ? grid[i][j] + dp[j] : (int)(1e9);
+                    int left = j > 0 ? grid[i][j] + temp[j - 1] : (int)(1e9);
+                    temp[j] = Math.min(up, left);
+                }
+            }
+
+            dp = temp;
+        }
+
+        return dp[m - 1];
+    }
+}
