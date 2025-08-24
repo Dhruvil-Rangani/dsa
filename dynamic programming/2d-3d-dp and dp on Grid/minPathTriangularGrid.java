@@ -45,3 +45,27 @@ class Solution2 {
         return func(0, 0, triangle, dp);
     }
 }
+
+// This is tabulation approach to solve the problem.
+// The time complexity is O(n^2) where n is the number of rows in the triangle.
+// The space complexity is O(n^2) for the DP table.
+class Solution {
+    public int minTriangleSum(int[][] triangle) {
+        int n = triangle.length;
+        int[][] dp = new int[n][n];
+        
+        for(int k = 0; k < n; k++) {
+            dp[n - 1][k] = triangle[n - 1][k];
+            for(int i = n - 2; i >= 0; i--) {
+                for(int j = i; j >= 0; j--) {
+                    int d = triangle[i][j] + dp[i + 1][j];
+                    int dg = triangle[i][j] + dp[i + 1][j + 1];
+
+                    dp[i][j] = Math.min(d, dg);
+                }
+            }
+        }
+
+        return dp[0][0];
+    }
+}
