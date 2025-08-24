@@ -69,3 +69,31 @@ class Solution {
         return dp[0][0];
     }
 }
+
+// This is space optimized tabulation approach to solve the problem.
+// The time complexity is O(n^2) where n is the number of rows in the triangle.
+// The space complexity is O(n) for the DP table.
+
+class Solution3 {
+    public int minTriangleSum(int[][] triangle) {
+        int n = triangle.length;
+        int[] dp = new int[n];
+        
+        for(int k = 0; k < n; k++) {
+            dp[k] = triangle[n - 1][k];
+        }
+
+        for(int i = n - 2; i >= 0; i--) {
+            int[] temp = new int[i + 1];
+            for(int j = i; j >= 0; j--) {
+                int d = triangle[i][j] + dp[j];
+                int dg = triangle[i][j] + dp[j + 1];
+
+                temp[j] = Math.min(d, dg);
+            }
+            dp = temp;
+        }
+
+        return dp[0];
+    }
+}
