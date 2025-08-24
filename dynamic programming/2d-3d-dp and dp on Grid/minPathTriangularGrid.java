@@ -20,3 +20,28 @@ class Solution1 {
     }
 }
 
+// This is memoization approach to solve the problem.
+// It uses a recursive function with memoization to avoid redundant calculations.
+// The time complexity is reduced to O(n^2) where n is the number of rows in the triangle.
+// The space complexity is O(n^2) for the DP table and O(n) for the memoization stack space.
+// Overall space complexity is O(n^2).
+
+class Solution2 {
+    private int func(int row, int col, int[][] triangle, int[][] dp) {
+        int n = triangle.length;
+        if(dp[row][col] != -1) return dp[row][col];
+        if(row == n - 1) return triangle[n - 1][col];
+
+        int bottom = triangle[row][col] + func(row + 1, col, triangle, dp);
+        int bottomRight = triangle[row][col] + func(row + 1, col + 1, triangle, dp);
+
+        int minSum = Math.min(bottomRight, bottom);
+        return dp[row][col] = minSum;
+    }
+    public int minTriangleSum(int[][] triangle) {
+        int n = triangle.length;
+        int[][] dp = new int[n][n];
+        for(int[] row : dp) Arrays.fill(row, -1);
+        return func(0, 0, triangle, dp);
+    }
+}
