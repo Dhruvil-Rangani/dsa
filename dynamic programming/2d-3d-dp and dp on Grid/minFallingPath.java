@@ -42,3 +42,35 @@ class Solution {
     return minSum;
   }
 }
+
+// This is tabulation approach to solve the problem.
+// The time complexity is O(n*m) where n is the number of rows and m is the number of columns in the matrix.
+// The space complexity is O(n*m) for the DP table.
+class Solution2 {
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int minSum = (int) (1e9);
+        int[][] dp = new int[n][m];
+        for (int j = 0; j < m; j++) {
+            dp[0][j] = matrix[0][j];
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int bottom = dp[i - 1][j];
+                int bottomRight = j < m - 1 ? dp[i - 1][j + 1] : (int) (1e9);
+                int bottomLeft = j > 0 ? dp[i - 1][j - 1] : (int) (1e9);
+
+                dp[i][j] = matrix[i][j] + Math.min(bottom, Math.min(bottomLeft, bottomRight));
+            }
+        }
+
+        for (int j = 0; j < m; j++) {
+            minSum = Math.min(minSum, dp[n - 1][j]);
+        }
+
+        return minSum;
+    }
+}
+
