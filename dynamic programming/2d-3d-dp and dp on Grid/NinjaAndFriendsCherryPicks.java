@@ -72,3 +72,85 @@ class Solution2 {
     return func(0, 0, m - 1, g, n, m, dp);
   }
 }
+
+// This is tabulation approach to solve the problem.
+// The time complexity is O(n*m*m*9) where n is the number of rows and m is the number of columns in the grid.
+// The space complexity is O(n*m*m) for the DP table.
+
+class Solution3 {
+  public int maxChocolates(int[][] g) {
+    int n = g.length;
+    int m = g[0].length;
+    int[][][] dp = new int[n][m][m];
+    for (int j1 = 0; j1 < m; j1++) {
+      for (int j2 = 0; j2 < m; j2++) {
+        dp[n - 1][j1][j2] = j1 == j2 ? g[n - 1][j1] : g[n - 1][j1] + g[n - 1][j2];
+      }
+    }
+
+    for (int i = n - 2; i >= 0; i--) {
+      for (int j1 = 0; j1 < m; j1++) {
+        for (int j2 = 0; j2 < m; j2++) {
+          int max = (int) (-1e9);
+          int[] dir = {-1, 0, 1};
+          for (int d1 = 0; d1 < 3; d1++) {
+            for (int d2 = 0; d2 < 3; d2++) {
+              int sum = j1 == j2 ? g[i][j1] : g[i][j1] + g[i][j2];
+              if(j1 + dir[d1] >= 0 && j1 + dir[d1] < m && j2 + dir[d2] >= 0 && j2 + dir[d2] < m) {
+                sum += dp[i + 1][j1 + dir[d1]][j2 + dir[d2]];
+              } else sum = (int)(-1e9);
+              max = Math.max(max, sum);
+            }
+          }
+
+          dp[i][j1][j2] = max;
+        }
+      }
+    }
+
+    return dp[0][0][m - 1];
+  }
+}
+
+// This is space optimized tabulation approach to solve the problem.
+// The time complexity is O(n*m*m*9) where n is the number of rows and m is the number of columns in the grid.
+// The space complexity is O(m*m) for the DP table.
+
+class Solution4 {
+  public int maxChocolates(int[][] g) {
+    int n = g.length;
+    int m = g[0].length;
+    int[][] dp = new int[m][m];
+    for (int j1 = 0; j1 < m; j1++) {
+      for (int j2 = 0; j2 < m; j2++) {
+        dp[j1][j2] = j1 == j2 ? g[n - 1][j1] : g[n - 1][j1] + g[n - 1][j2];
+      }
+    }
+
+    for (int i = n - 2; i >= 0; i--) {
+        int[][] temp = new int[m][m];
+      for (int j1 = 0; j1 < m; j1++) {
+        for (int j2 = 0; j2 < m; j2++) {
+          int max = (int) (-1e9);
+          int[] dir = {-1, 0, 1};
+          for (int d1 = 0; d1 < 3; d1++) {
+            for (int d2 = 0; d2 < 3; d2++) {
+              int sum = j1 == j2 ? g[i][j1] : g[i][j1] + g[i][j2];
+              if(j1 + dir[d1] >= 0 && j1 + dir[d1] < m && j2 + dir[d2] >= 0 && j2 + dir[d2] < m) {
+                sum += dp[j1 + dir[d1]][j2 + dir[d2]];
+              } else sum = (int)(-1e9);
+              max = Math.max(max, sum);
+            }
+          }
+
+          temp[j1][j2] = max;
+        }
+      }
+      dp = temp;
+    }
+
+    return dp[0][m - 1];
+  }
+}
+
+
