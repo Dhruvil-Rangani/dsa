@@ -67,3 +67,31 @@ class Solution2 {
     }
 }
 
+// Space Optimized Approach
+// Time Complexity: O(n * target) where n is the number of elements in the array and target is the given sum
+// Space Complexity: O(target + 1) for the previous row array
+// The space complexity is reduced to O(target + 1) by using a single array to store the results of the previous row,
+// and updating it as we iterate through the elements of the array.
+class Solution3 {
+    public boolean isSubsetSum(int[] arr, int target) {
+      int n = arr.length;
+        boolean[] dp = new boolean[target + 1];
+        dp[0] = true;
+        // Fill DP table
+        for (int i = 1; i <= n; i++) {
+            boolean[] temp = new boolean[target + 1];
+            temp[0] = true;
+            for (int j = 1; j <= target; j++) {
+                if (j < arr[i - 1]) {
+                    temp[j] = dp[j];
+                } else {
+                    // Include or exclude arr[i-1]
+                    temp[j] = dp[j] || dp[j - arr[i - 1]];
+                }
+            }
+            dp = temp;
+        }
+
+        return dp[target];
+    }
+}
