@@ -47,7 +47,7 @@ class Solution {
 // Time Complexity: O(n * target) where n is the number of elements in the array and target is the given sum
 // Space Complexity: O(n * target) for the dp table
 
-class Solution {
+class Solution2 {
     public boolean isSubsetSum(int[] arr, int target) {
       int n = arr.length;
       boolean[][] dp = new boolean[n][target + 1];
