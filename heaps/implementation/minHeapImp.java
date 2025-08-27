@@ -93,7 +93,6 @@ class Solution {
     }
 
     public void extractMin() {
-        int el = arr.get(0);
         int temp = arr.get(cnt - 1);
         arr.set(cnt - 1, arr.get(0));
         arr.set(0, temp);
