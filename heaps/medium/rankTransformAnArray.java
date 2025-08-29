@@ -35,3 +35,35 @@ class Solution {
         return result;    
     }
 }
+
+// This is another optimal solution using sorting and hashing
+// Time Complexity: O(n log n)
+// Space Complexity: O(n)
+// without using Set to store unique elements
+
+class Solution2 {
+    public int[] arrayRankTransform(int[] nums) {
+        int n = nums.length;
+        if (n == 0) return new int[0];
+        int[] sortedArray = new int[n];
+        for(int i = 0; i < n; i++) {
+            sortedArray[i] = nums[i];
+        }
+
+        Arrays.sort(sortedArray);
+
+        Map<Integer, Integer> rankMap = new HashMap<>();
+        int rank = 1;
+        for(int i = 0; i < n; i++) {
+            if(!rankMap.containsKey(sortedArray[i])) {
+                rankMap.put(sortedArray[i], rank++);
+            }
+        }
+
+        int[] result = new int[n];
+        for(int i = 0; i < n; i++) {
+            result[i] = rankMap.get(nums[i]);
+        }
+        return result;    
+    }
+}
