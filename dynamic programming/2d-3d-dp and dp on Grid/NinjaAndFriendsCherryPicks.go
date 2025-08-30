@@ -1,3 +1,5 @@
+package main
+
 func maxChocolates(g [][]int) int {
 	n := len(g)
 	m := len(g[0])
@@ -20,7 +22,7 @@ func maxChocolates(g [][]int) int {
 	dir := []int{-1, 0, 1}
 
 	for i := n - 2; i >= 0; i-- {
-		cur = make([][]int, m)
+		cur := make([][]int, m)
 		for i := range cur {
 			cur[i] = make([]int, m)
 		}
