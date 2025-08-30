@@ -26,3 +26,36 @@ class Solution {
         return true;
     }
 }
+
+// second approach using queue
+// well-written interview ready code
+// Time Complexity: O(n log n)
+// Space Complexity: O(n)
+
+class Solution2 {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        int n = hand.length;
+        if(n % groupSize != 0) return false;
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for(int i : hand) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+
+        Queue<Integer> queue = new LinkedList<>();
+        int lastCard = -1;
+        int currentOpenGroups = 0;
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int currentCard = entry.getKey();
+            if(
+                (currentOpenGroups > 0 && currentCard > lastCard + 1) || 
+                currentOpenGroups > map.get(currentCard)
+            ) return false;
+            queue.offer(map.get(currentCard) - currentOpenGroups);
+            lastCard = currentCard;
+            currentOpenGroups = map.get(currentCard);
+            if(queue.size() == groupSize) currentOpenGroups -= queue.poll();
+        }
+
+        return currentOpenGroups == 0;
+    }
+}
