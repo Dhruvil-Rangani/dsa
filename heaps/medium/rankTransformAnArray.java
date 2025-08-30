@@ -1,4 +1,3 @@
-package heaps.medium;
 import java.util.*;
 // Given an integer array arr, replace each element with its rank.
 // The rank represents how large the element is. The rank has the following rules:

@@ -1,4 +1,3 @@
-package heaps.medium;
 import java.util.PriorityQueue;
 // Given an array of n elements, where each element is at most k away from its target
 // position, design a class to efficiently find the kth largest element in a stream of numbers.

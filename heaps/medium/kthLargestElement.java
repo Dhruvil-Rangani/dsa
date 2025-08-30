@@ -1,4 +1,3 @@
-package heaps.medium;
 import java.util.Random;
 
 import java.util.PriorityQueue;
