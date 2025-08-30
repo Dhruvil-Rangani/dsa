@@ -31,7 +31,7 @@ class Solution {
 
 
 // well-written interview ready code
-class Solution {
+class Solution2 {
     public int lastStoneWeight(int[] stones) {
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
         for(int stone : stones) maxHeap.add(stone);
