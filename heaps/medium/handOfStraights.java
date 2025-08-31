@@ -59,3 +59,34 @@ class Solution2 {
         return currentOpenGroups == 0;
     }
 }
+
+// third approach using hashmap
+// Time Complexity: O(n)
+// Space Complexity: O(n)
+// is this the most solution possible? 
+class Solution3 {
+    public boolean isNStraightHand(int[] hand, int groupSize) {
+        int n = hand.length;
+        if(n % groupSize != 0) return false;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i : hand) {
+            map.put(i, map.getOrDefault(i, 0) + 1);
+        }
+
+        for(int card : hand) {
+            int startCard = card;
+            while(map.getOrDefault(startCard - 1, 0) > 0) startCard--;
+            while(startCard <= card) {
+                while(map.getOrDefault(startCard, 0) > 0) {
+                    for(int nextCard = startCard; nextCard < startCard + groupSize; nextCard++) {
+                        if(map.getOrDefault(nextCard, 0) == 0) return false;
+                        map.put(nextCard, map.get(nextCard) - 1);
+                    }
+                }
+                startCard++;
+            }
+        }
+
+        return true;
+    }
+}
