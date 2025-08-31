@@ -63,7 +63,7 @@ class Solution2 {
 // third approach using hashmap
 // Time Complexity: O(n)
 // Space Complexity: O(n)
-// is this the most solution possible? 
+// is this the most solution possible? yes it is the most optimal solution possible
 class Solution3 {
     public boolean isNStraightHand(int[] hand, int groupSize) {
         int n = hand.length;
