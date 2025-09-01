@@ -1,3 +1,4 @@
+package heaps.hard;
 import java.util.*;
 // Design a simplified version of Twitter where users can post tweets, follow/unfollow another user and is able to see the 10 most recent tweets in the user's news feed.
 // Your design should support the following methods:
@@ -5,7 +6,7 @@ import java.util.*;
 // 2. getNewsFeed(userId): Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
 // 3. follow(followerId, followeeId): Follower follows a followee.
 // 4. unfollow(followerId, followeeId): Follower unfollows a followee.
-// Time Complexity: O(n log k) for getNewsFeed where n is the number of users followed by userId and k is 10
+// Time Complexity: O(n) for getNewsFeed where n is the number of users followed by userId
 // Space Complexity: O(n + m) where n is the number of users and m is the number of tweets
 
 class Twitter {
@@ -14,7 +15,7 @@ class Twitter {
     private Map<Integer, Set<Integer>> followMap;
 
     public Twitter() {
-        this.cnt = cnt;
+        this.cnt = 0;
         this.tweetMap = new HashMap<>();
         this.followMap = new HashMap<>();
     }
