@@ -31,3 +31,37 @@ class Solution1 {
     }
 }
 
+// this is most optimal approach
+// Time Complexity: O(n) where n is the number of elements in nums
+// Space Complexity: O(n)
+
+class Solution {
+    @SuppressWarnings("unchecked")
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int num : nums) map.put(num, map.getOrDefault(num, 0) + 1);
+
+        List<Integer>[] buckets = new ArrayList[nums.length + 1];
+        for(int i = 0; i < buckets.length; i++) {
+            buckets[i] = new ArrayList<>();
+        }
+
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            buckets[entry.getValue()].add(entry.getKey());
+        }
+
+        int[] ans = new int[k];
+        int i = 0;
+        for(int freq = buckets.length - 1; freq >= 0; freq--) {
+            for(int num : buckets[freq]) {
+                ans[i++] = num;
+                if(i == k) {
+                    return ans;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
+
