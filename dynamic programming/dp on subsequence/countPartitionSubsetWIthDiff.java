@@ -143,14 +143,80 @@ class Solution2 {
 // tabulation approach
 // Time Complexity: O(n * K) where n is the number of elements in arr and  K is the target sum
 // Space Complexity: O(n * K) where K is the target sum
+class Solution3 {
+    // Modulus value to avoid overflow in calculations.
+    private static final int MOD = (int)1e9 + 7;
 
+    /* Function to calculate the number of ways to
+    achieve a target sum with the given numbers.*/
+    private int findWays(int[] num, int tar) {
+        int n = num.length;
+        /* DP table where dp[i][j] represents the number
+        of ways to get sum j using the first i elements.*/
+        int[][] dp = new int[n][tar + 1];
+    
+        /* If the first element is 0, we have 2 
+        ways to achieve sum 0: by either including
+        or excluding the element.*/
+        if (num[0] == 0) dp[0][0] = 2;  
+        else dp[0][0] = 1;  
+    
+        /* If the first element is not 0 and is less
+        than or equal to target, we have 1 way to 
+        achieve the sum equal to that element.*/
+        if (num[0] != 0 && num[0] <= tar) dp[0][num[0]] = 1;  
+    
+        // Fill the DP table for the rest of the elements.
+        for (int ind = 1; ind < n; ind++) {
+            for (int target = 0; target <= tar; target++) {
+                
+                /* Number of ways to achieve target sum 
+                without using the current element.*/
+                int notTaken = dp[ind - 1][target];
+    
+                /* Number of ways to achieve target
+                sum using the current element.*/
+                int taken = 0;
+                if (num[ind] <= target)
+                    taken = dp[ind - 1][target - num[ind]];
+        
+                /* Total ways to achieve target sum with
+                or without including the current element.*/
+                dp[ind][target] = (notTaken + taken) % MOD;
+            }
+        }
+        /* Return the number of ways to achieve
+        the target sum using all elements.*/
+        return dp[n - 1][tar];
+    }
+
+    /* Function to count the number of
+    subsets with a given difference.*/
+    public int countPartitions(int n, int diff, int[] arr) {
+        int totSum = 0;
+        
+        // Calculate the total sum of elements in the array.
+        for (int i = 0; i < n; i++) {
+            totSum += arr[i];
+        }
+    
+        /* If the difference is more than the total sum or
+        if the difference is not even (as (totalSum - diff)
+        must be even to divide into two subsets), return 0.*/
+        if (totSum - diff < 0 || (totSum - diff) % 2 != 0) return 0;
+    
+        /* Call the helper function to find the number 
+        of subsets with sum (totSum - diff) / 2.*/
+        return findWays(arr, (totSum - diff) / 2);
+    }
+}
 
 
 // https://www.codingninjas.com/codestudio/problems/count-partitions-with-given-difference_3751503?leftPanelTab=0
 // Time Complexity: O(n * K) where n is the number of elements in arr and   K is the target sum
 // Space Complexity: O(K) where K is the target sum
 // most optimal solution using space optimization approach
-class Solution {
+class Solution4 {
     private static final int mod = 1000000007;
 
     public int perfectSum(int[] arr, int K) {
