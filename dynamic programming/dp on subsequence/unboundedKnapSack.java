@@ -95,5 +95,23 @@ class Solution {
     }
 }
 
+// much more concised version of space optimization approach would be:
+// here we start j from wt[i] instead of 0, because for j < wt[i], yes will never be possible
+// so we can skip those iterations
+// this is more optimal and robust solution than the previous one
+class Solution5 {
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+        int[] dp = new int[W + 1];
+
+        for(int i = 0; i < n; i++) {
+            for(int j = wt[i]; j <= W; j++) {
+                dp[j] = Math.max(dp[j], val[i] + dp[j - wt[i]]);
+            }
+        }
+
+        return dp[W];
+    }
+}
+
 
 
