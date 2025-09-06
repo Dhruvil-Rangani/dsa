@@ -48,5 +48,52 @@ class Solution2 {
 }
 
 // tabulation approach
+// TC: O(N * W)
+// SC: O(N * W)
+// by using tabulation we can avoid the recursion stack space.
+class Solution3 {
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+        int[][] dp = new int[n][W + 1];
+        for(int i = 0; i <= W; i++) {
+            dp[0][i] = (i / wt[0]) * val[0];
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j <= W; j++) {
+                int nope = dp[i - 1][j];
+                int yes = (int)(-1e9);
+                if(wt[i] <= j) yes = val[i] + dp[i][j - wt[i]];
+                dp[i][j] = Math.max(nope, yes);
+            }
+        }
+
+        return dp[n - 1][W];
+    }
+}
+
+// space optimization
+// TC: O(N * W)
+// SC: O(W)
+
+class Solution {
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+        int[] dp = new int[W + 1];
+        for(int i = 0; i <= W; i++) {
+            dp[i] = (i / wt[0]) * val[0];
+        }
+
+        for(int i = 1; i < n; i++) {
+            for(int j = 0; j <= W; j++) {
+                int nope = dp[j];
+                int yes = (int)(-1e9);
+                if(wt[i] <= j) yes = val[i] + dp[j - wt[i]];
+                dp[j] = Math.max(nope, yes);
+            }
+        }
+
+        return dp[W];
+    }
+}
+
 
 
