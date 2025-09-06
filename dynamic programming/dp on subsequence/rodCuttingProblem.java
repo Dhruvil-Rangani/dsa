@@ -91,4 +91,21 @@ class Solution4{
     }
 }
 
-// 
+// another way of writing the space optimization
+// TC: O(N * N)
+// SC: O(N)
+
+class Solution{
+    public int RodCutting(int price[], int n) {
+      int[] dp = new int[n + 1];
+      dp[0] = 0;
+
+      for(int i = 0; i < n; i++) {
+        for(int j = i + 1; j <= n; j++) {
+          dp[j] = Math.max(dp[j], price[i] + dp[j - (i + 1)]);
+        }
+      }
+
+      return dp[n];
+    }
+}
