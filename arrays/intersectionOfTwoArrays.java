@@ -59,3 +59,69 @@ class Solution {
         return Arrays.copyOfRange(ans, 0, k);
     }
 }
+
+// if the two arrays were alreeady sorted, we could use two pointers to find the intersection in O(n + m) time and O(1) space.
+// that approach implementation is as follows:
+class Solution2 {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        int n = nums1.length;
+        int m = nums2.length;
+
+        int i = 0, j = 0, k = 0;
+        int[] ans = new int[Math.min(n, m)];
+        while(i < n && j < m) {
+            if(nums1[i] == nums2[j]) {
+                if(k == 0 || ans[k - 1] != nums1[i]) { // to avoid duplicates
+                    ans[k++] = nums1[i];
+                }
+                i++;
+                j++;
+            } else if(nums1[i] < nums2[j]) {
+                i++;
+            } else {
+                j++;
+            }
+        }
+
+        return Arrays.copyOfRange(ans, 0, k);
+    }
+
+    // but this approach this test case fails:
+//     // 
+// [-45, -45, 0, 0, 2]
+// Nums2
+// [-50, -45, 0, 0, 5, 7]
+// Your Output
+// -45 0
+// Expected Output
+// -45 0 0
+
+// so how do we resolve it?
+    // we can use a list to store the intersection and then convert it to an array at the end.
+    // this way, we can avoid duplicates easily.
+// this is the most optimal solution possible for this problem if the arrays are sorted.
+// TC: O(n + m)
+// SC: O(1) if we don't count the output array, otherwise O(min(n, m))
+class Solution {
+    public int[] intersectionArray(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int m = nums2.length;
+
+        int i = 0, j = 0, k = 0;
+        int[] ans = new int[Math.min(n, m)];
+
+        while(i < n && j < m) {
+            if(nums1[i] == nums2[j]) {
+                ans[k++] = nums1[i];
+                i++;
+                j++;
+            } else if(nums1[i] < nums2[j]) i++;
+            else j++;
+        }
+
+        return Arrays.copyOfRange(ans, 0, k);
+    }
+}
