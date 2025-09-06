@@ -26,4 +26,29 @@ class Solution {
   }
 }
 
+// memoization approach
+// TC: O(N * amount)
+// SC: O(N * amount) + O(N) for recursion stack
 
+class Solution2 {
+  private static final int mod = 1000000007;
+  private int f(int i, int target, int[][] dp, int[] coins) {
+    if(i == 0) {
+      if(target % coins[0] == 0) return 1;
+      return 0;
+    }
+    if(dp[i][target] != -1) return dp[i][target];
+
+    int notPick = f(i - 1, target, dp, coins);
+    int pick = 0;
+    if(coins[i] <= target) pick = f(i, target - coins[i], dp, coins);
+
+    return dp[i][target] = (notPick + pick) % mod;
+  }
+
+  public int count(int[] coins, int N, int amount) {
+    int[][] dp = new int[N][amount + 1];
+    for(int[] row : dp) Arrays.fill(row, -1);
+    return f(N - 1, amount, dp, coins);
+  }
+}
