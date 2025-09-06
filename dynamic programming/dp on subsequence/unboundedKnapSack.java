@@ -1,3 +1,4 @@
+import java.util.*;
 // Infinite Knapsack
 // recursive approach
 // TC: >> O(2^N)
@@ -6,7 +7,7 @@
 // because we are making two calls at each step, so it is going to be more than this.
 // but this is not the optimal solution, we can do better than this using memoization or tabulation.
 // this is just to understand the problem and the recursive approach.
-class Solution {
+class Solution1 {
     public int f(int i, int target, int[] wt, int[] val) {
         if(i == 0) {
             return (target / wt[0]) * val[0];
@@ -24,4 +25,28 @@ class Solution {
 }
 
 // memoization approach
+// TC: O(N * W)
+// SC: O(N * W) + O(N) for recursion stack
+class Solution2 {
+    public int f(int i, int target, int[] wt, int[] val, int[][] dp) {
+        if(i == 0) {
+            return (target / wt[0]) * val[0];
+        }
+        if(dp[i][target] != -1) return dp[i][target];
+        int nope = f(i - 1, target, wt, val, dp);
+        int yes = (int)(-1e9);
+        if(wt[i] <= target) yes = val[i] + f(i, target - wt[i], wt, val, dp);
+        
+        return dp[i][target] = Math.max(nope, yes);
+    }
+
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+        int[][] dp = new int[n][W + 1];
+        for(int[] row : dp) Arrays.fill(row, -1);
+        return f(n - 1, W, wt, val, dp);
+    }
+}
+
+// tabulation approach
+
 
