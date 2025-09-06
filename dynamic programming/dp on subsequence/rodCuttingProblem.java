@@ -53,7 +53,7 @@ class Solution2{
 // TC: O(N * N)
 // SC: O(N * N)
 
-class Solution{
+class Solution3{
     public int RodCutting(int price[], int n) {
       int[][] dp = new int[n][n + 1];
       for(int i = 0; i <= n; i++) dp[0][i] = i * price[0];
@@ -69,3 +69,26 @@ class Solution{
       return dp[n - 1][n];
     }
 }
+
+// space optimization
+// TC: O(N * N)
+// SC: O(N)
+
+class Solution4{
+    public int RodCutting(int price[], int n) {
+      int[] dp = new int[n + 1];
+      for(int i = 0; i <= n; i++) dp[i] = i * price[0];
+
+      for(int i = 1; i < n; i++) {
+        for(int j = 0; j <= n; j++) {
+          int nope = dp[j];
+          int yes = (int)(-1e9);
+          if((i + 1) <= j) yes = price[i] + dp[j - (i + 1)];
+          dp[j] = Math.max(nope, yes);
+        }
+      }
+      return dp[n];
+    }
+}
+
+// 
