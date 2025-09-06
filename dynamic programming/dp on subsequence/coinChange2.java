@@ -80,3 +80,32 @@ class Solution3 {
   }
 }
 
+// space optimization
+// TC: O(N * amount)
+// SC: O(amount)
+// we can see that we are only using the previous row and the current row, so we can optimize the space by using two arrays.
+// further we can see that we are using the current row to calculate the next row, so we can optimize the space by using only one array.
+// this is the most optimal solution possible for this problem.
+class Solution {
+  private static final int mod = 1000000007;
+
+  public int count(int[] coins, int N, int amount) {
+    int[] dp = new int[amount + 1];
+    for(int i = 0; i <= amount; i++) {
+      if(i % coins[0] == 0) dp[i] = 1;
+    }
+
+    for(int i = 1; i < N; i++) {
+      for(int j = 0; j <= amount; j++) {
+        int notPick = dp[j];
+        int pick = 0;
+        if(coins[i] <= j) pick = dp[j - coins[i]];
+        dp[j] = (pick + notPick) % mod;
+      }
+    }
+
+    return dp[amount];
+  }
+}
+
+
