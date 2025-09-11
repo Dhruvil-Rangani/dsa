@@ -1,8 +1,4 @@
-#include <vector>
-#include <string>
-#include <climits>
-#include <algorithm>
-#include <unordered_map>
+#include <bits/stdc++.h>
 using namespace std;
 // recursive approach
 // TC: O(2^(n+m)) SC: O(n+m) for recursion stack
