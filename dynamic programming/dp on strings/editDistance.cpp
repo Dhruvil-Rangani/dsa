@@ -113,7 +113,34 @@ public:
 
 // space optimization 2 with just one array
 // TC: O(n*m) SC: O(m)
+// this is the most optimized approach and only using single array we optimize space complexity to O(m) and not O(2 * m);
+// this is hyper optimized approach
+class Solution {
+public:
+    int minDistance(string start, string target) {
+        int n = start.size();
+        int m = target.size();
+        vector<int> dp(m + 1, 0);
+        for (int i = 0; i <= m; i++)
+            dp[i] = i;
 
+        for (int i = 1; i <= n; i++) {
+            int prev = dp[0];
+            dp[0] = i;
+            for (int j = 1; j <= m; j++) {
+                int temp = dp[j];
+                if (start[i - 1] == target[j - 1])
+                    dp[j] = prev;
+                else {
+                    dp[j] = 1 + min(dp[j - 1], min(dp[j], prev));
+                }
+                prev = temp;
+            }
+        }
+
+        return dp[m];
+    }
+};
 
 
 
