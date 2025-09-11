@@ -74,4 +74,78 @@ public:
     }
 };
 
+// tabulation approach
+// TC: O(n*m) SC: O(n*m)
+class Solution {
+public:
+    bool isMatch(string str, string pat) {
+        int n = pat.size();
+        int m = str.size();
+        vector<vector<bool>> dp(n + 1, vector<bool>(m + 1, false));
+        dp[0][0] = true;
+
+        for (int i = 1; i <= n; i++) {
+            int flag = true;
+            for (int j = 0; j < i; j++) {
+                if (pat[j] != '*') {
+                    flag = false;
+                    break;
+                }
+            }
+            dp[i][0] = flag;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                dp[i][j] = false;
+                if (pat[i - 1] == str[j - 1] || pat[i - 1] == '?') {
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+                else if (pat[i - 1] == '*') {
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+                }
+            }
+        }
+
+        return dp[n][m];
+    }
+};
+
+// space optimization
+// TC: O(n*m) SC: O(2 * m)
+class Solution {
+public:
+    bool isMatch(string str, string pat) {
+        int n = pat.size();
+        int m = str.size();
+        vector<bool> dp(m + 1, false);
+        vector<bool> cur(m + 1, false);
+        dp[0] = true;
+        cur[0] = true;
+
+        for (int i = 1; i <= n; i++) {
+            int flag = true;
+            for (int j = 0; j < i; j++) {
+                if (pat[j] != '*') {
+                    flag = false;
+                    break;
+                }
+            }
+            cur[0] = flag;
+            for (int j = 1; j <= m; j++) {
+                cur[j] = false;
+                if (pat[i - 1] == str[j - 1] || pat[i - 1] == '?') {
+                    cur[j] = dp[j - 1];
+                } else if (pat[i - 1] == '*') {
+                    cur[j] = dp[j] || cur[j - 1];
+                }
+            }
+            dp = cur;
+        }
+
+        return dp[m];
+    }
+};
+
+// space optimization - using single array
 
