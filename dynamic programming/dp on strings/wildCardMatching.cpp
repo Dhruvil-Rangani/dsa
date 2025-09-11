@@ -148,4 +148,69 @@ public:
 };
 
 // space optimization - using single array
+// TC: O(n*m) SC: O(m)
+class Solution {
+public:
+    bool isMatch(string str, string pat) {
+        int n = pat.size();
+        int m = str.size();
+        vector<bool> dp(m + 1, false);
+        dp[0] = true;
 
+        for (int i = 1; i <= n; i++) {
+            int prev = dp[0];
+            int flag = true;
+            for (int j = 0; j < i; j++) {
+                if (pat[j] != '*') {
+                    flag = false;
+                    break;
+                }
+            }
+            dp[0] = flag;
+            for (int j = 1; j <= m; j++) {
+                int temp = dp[j];
+                if (pat[i - 1] == str[j - 1] || pat[i - 1] == '?') {
+                    dp[j] = prev;
+                } else if (pat[i - 1] == '*') {
+                    dp[j] = dp[j] || dp[j - 1];
+                } else dp[j] = false;
+                prev = temp;
+            }
+        }
+
+        return dp[m];
+    }
+};
+
+// another space optimization - using pre computation of isAllStars
+class Solution {
+public:
+    bool isMatch(string str, string pat) {
+        int n = pat.size();
+        int m = str.size();
+        vector<bool> dp(m + 1, false);
+        dp[0] = true;
+
+        vector<bool> prefixStars(n + 1, true);
+        for (int i = 1; i <= n; ++i) {
+            prefixStars[i] = prefixStars[i - 1] && (pat[i - 1] == '*');
+        }
+
+        for (int i = 1; i <= n; i++) {
+            bool prev = dp[0];
+            dp[0] = prefixStars[i];
+            for (int j = 1; j <= m; j++) {
+                int temp = dp[j];
+                if (pat[i - 1] == str[j - 1] || pat[i - 1] == '?') {
+                    dp[j] = prev;
+                } else if (pat[i - 1] == '*') {
+                    dp[j] = dp[j] || dp[j - 1];
+                } else
+                    dp[j] = false;
+                prev = temp;
+            }
+        }
+
+        return dp[m];
+    }
+};
