@@ -2,6 +2,7 @@
 using namespace std;
 
 // https://leetcode.com/problems/longest-word-with-all-prefixes/
+// https://www.codingninjas.com/codestudio/problems/longest-string-with-all-prefixes_920519
 // Using Trie Data Structure
 // Time Complexity: O(N * L) where N is number of words and L is average length of words
 // Space Complexity: O(N * L) for Trie Data Structure inserting all words
